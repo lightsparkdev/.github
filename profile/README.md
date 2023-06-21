@@ -1,12 +1,12 @@
 # ⚡️ Hi, we're Lightspark!
 
-![Github Header](https://github.com/lightsparkdev/.github/assets/1393755/d11efbf4-8f41-4e8d-8769-2ae3790392ad)
+![Github_Header](https://github.com/lightsparkdev/.github/assets/1393755/d91d8c57-e8d1-4588-8289-26ef9da73e9e)
 
 The Lightning Network is an open, low cost, interoperable payment network that settles in real time. Lightspark is the easiest, most reliable, enterprise-grade gateway to Lightning, enabling money to move just like bits and bytes do on the Internet. You can learn more about our products [here](https://www.lightspark.com/products).
 
 **Welcome to our github home!** Here you'll find our open-source SDKs that you can use to enable Lightning payments in your app, website, or backend. You can find full documentation for our SDKs and APIs [📃 here](https://app.lightspark.com/docs). Here's a summary of some of the repositories you'll find in our org:
 
-## ![typescript](https://github.com/lightsparkdev/.github/assets/1393755/26a9f9e4-0cda-4c1c-be29-d16299e84151) [js-sdk](https://github.com/lightsparkdev/js-sdk)
+## ![typescript](https://github.com/lightsparkdev/.github/assets/1393755/0ad3c4db-5938-4c69-9a30-c99399c0330d) [js-sdk](https://github.com/lightsparkdev/js-sdk)
 
 This repository contains all of the Lightspark Javascript/Typescript SDKs. Some of the included npm packages are:
 
