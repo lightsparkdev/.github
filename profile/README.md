@@ -18,10 +18,6 @@ This repository contains all of the Lightspark Javascript/Typescript SDKs. Some 
 
 Check out the READMEs for each package for more information on how to use them, or see the `examples` directory in each package for sample use cases.
 
-## 🍎 [swift-wallet-sdk](https://github.com/lightsparkdev/swift-wallet-sdk)
-
-This is a Swift Wallet SDK for the Lightspark Wallet APIs. It can be used from an iOS environment to integrate with a Lightspark Lightning wallet. It also contains a demo iOS app to show how to use the SDK. You can also check out its [documentation](https://app.lightspark.com/docs/wallet-sdk/getting-started) or [API Reference](https://lightsparkdev.github.io/swift-wallet-sdk/documentation/lightsparkwallet/).
-
 ## 🤖 [kotlin-sdk](https://github.com/lightsparkdev/kotlin-sdk)
 
 This repository contains the Lightspark Kotlin (multiplatform) SDKs. They can be used from either Kotlin or Java, from Android or another JVM context. The repository also contains a sample Android app which uses the wallet-sdk to display basic node, channel, and transaction information. Modules are published to maven-central. Important modules include:
