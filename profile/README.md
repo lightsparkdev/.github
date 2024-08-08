@@ -6,28 +6,28 @@ The Lightning Network is an open, low cost, interoperable payment network that s
 
 **Welcome to our github home!** Here you'll find our open-source SDKs that you can use to enable Lightning payments in your app, website, or backend. You can find full documentation for our SDKs and APIs [📃 here](https://app.lightspark.com/docs). Here's a summary of some of the repositories you'll find in our org:
 
-## ![typescript](https://github.com/lightsparkdev/.github/assets/1393755/0ad3c4db-5938-4c69-9a30-c99399c0330d) [js-sdk](https://github.com/lightsparkdev/js-sdk)
+## ⚡️ [Lightspark SDK](https://docs.lightspark.com/lightspark-sdk/getting-started)
+Our Lightspark SDK is the quickest and most cost-effective way to send and receive Bitcoin payments on the Lightning Network. It is available in several programming languages:
 
-This repository contains all of the Lightspark Javascript/Typescript SDKs. Some of the included npm packages are:
-
-- [lightspark-sdk](https://github.com/lightsparkdev/js-sdk/tree/main/packages/lightspark-sdk/README.md): A high-level management SDK that can be used from a node or browser environment. It's used to manage accounts, nodes, wallets, etc. and should be authenticated via API token or OAuth.
-- [wallet-sdk](https://github.com/lightsparkdev/js-sdk/tree/main/packages/wallet-sdk/README.md): A client-side wallet SDK, which can be used from a browser or React Native environment. It's meant to interact with a single wallet user.
-- [react-wallet](https://github.com/lightsparkdev/js-sdk/tree/main/packages/react-wallet/README.md): A React library that wraps the wallet SDK and provides some convenient React hooks.
-- [react-native](https://github.com/lightsparkdev/js-sdk/tree/main/packages/react-native): Utilities and alternative implementations of some core Lightspark SDK interfaces to add compatibility with react-native.
-- A few other small utility packages
+- [Typescript](https://github.com/lightsparkdev/js-sdk/tree/main/packages/lightspark-sdk/README.md) ([docs](https://docs.lightspark.com/lightspark-sdk/getting-started?language=typescript))
+- [Python](https://github.com/lightsparkdev/python-sdk) ([docs](https://docs.lightspark.com/lightspark-sdk/getting-started?language=python))
+- [Golang](https://github.com/lightsparkdev/go-sdk) ([docs](https://docs.lightspark.com/lightspark-sdk/getting-started?language=go))
+- [Rust](https://github.com/lightsparkdev/lightspark-rs) ([docs](https://docs.lightspark.com/lightspark-sdk/getting-started?language=rust))
+- [Kotlin, Java, and other JVM Languages](https://github.com/lightsparkdev/kotlin-sdk/tree/main/lightspark-sdk/README.md) ([Kotlin docs](https://docs.lightspark.com/lightspark-sdk/getting-started?language=kotlin)) ([Java docs](https://docs.lightspark.com/lightspark-sdk/getting-started?language=java))
 
 Check out the READMEs for each package for more information on how to use them, or see the `examples` directory in each package for sample use cases.
 
-## 🤖 [kotlin-sdk](https://github.com/lightsparkdev/kotlin-sdk)
+## 🤖 [UMA Demo VASPs](https://docs.lightspark.com/uma-sdk/introduction?language=typescript)
 
-This repository contains the Lightspark Kotlin (multiplatform) SDKs. They can be used from either Kotlin or Java, from Android or another JVM context. The repository also contains a sample Android app which uses the wallet-sdk to display basic node, channel, and transaction information. Modules are published to maven-central. Important modules include:
+[UMA](https://docs.uma.me) lets anyone send and receive money (fiat and crypto) 24/7 using their favorite UMA-enabled wallet, exchange, or bank. The main UMA protocol definition and SDK implementations are in the [UMA Github org](https://github.com/uma-universal-money-address). However, this repo contains some useful demo VASP implementations that use the Lightspark SDK for lightning payments.
 
-- [lightspark-sdk](https://github.com/lightsparkdev/kotlin-sdk/tree/main/lightspark-sdk/README.md): A simple wrapper around the Lightspark GraphQL server API. It's used to manage accounts, nodes, wallets, etc. It can authenticate using an Account API token retrieved from your Lightspark account dashboard or via the oauth module.
-- [wallet-sdk](https://github.com/lightsparkdev/kotlin-sdk/tree/main/wallet-sdk/README.md): An SDK for interacting with the Lightspark API for a single wallet user. See its [documentation](https://app.lightspark.com/docs/wallet-sdk/getting-started) or [API Reference](https://app.lightspark.com/docs/reference/kotlin/wallet-sdk/index.html). It can be used from an Android environment and is used by the sample app [androidWalletDemo](https://github.com/lightsparkdev/kotlin-sdk/tree/main/androidwalletdemo). See its README for more info.
-- [core](https://github.com/lightsparkdev/kotlin-sdk/tree/main/core). A module containing common utilities for networking, authentication, and more.
-- There are also a few other small utility modules.
+- [Golang VASP using Gin](https://github.com/lightsparkdev/go-sdk/tree/main/examples/uma-server)
+- [Python VASP using Flask](https://github.com/lightsparkdev/uma-demo-vasp-python)
+- [Typescript VASP using express](https://github.com/lightsparkdev/js-sdk/tree/main/apps/examples/uma-vasp)
+- [Kotlin VASP using ktor](https://github.com/lightsparkdev/kotlin-sdk/tree/develop/umaserverdemo)
 
-## 🛠️ Lightspark SDK for other languages
+## 🛠️ Other small utility repos
 
-In addition to JS and Kotlin/Java, we also offer the [Lightspark SDK](https://app.lightspark.com/docs/api/2023-04-04/getting-started) in **[Rust](https://github.com/lightsparkdev/lightspark-rs), [Python](https://github.com/lightsparkdev/python-sdk), and [Golang](https://github.com/lightsparkdev/go-sdk)**. See the README file for your language or choice, and check out our [API Docs](https://app.lightspark.com/docs/api/2023-04-04/getting-started) to get started.
+- [lightspark-crypto-uniffi](https://github.com/lightsparkdev/lightspark-crypto-uniffi) - A rust library for many low-level crypto operations used by several Lightspark SDK implementations in various languages.
+- [compose-qr-code](https://github.com/lightsparkdev/compose-qr-code) - A simple, flexible QR code renderer for Jetpack Compose
 
