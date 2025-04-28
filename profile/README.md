@@ -6,7 +6,7 @@ The Lightning Network is an open, low cost, interoperable payment network that s
 
 **Welcome to our github home!** Here you'll find our open-source SDKs that you can use to enable Lightning payments in your app, website, or backend. You can find full documentation for our SDKs and APIs [📃 here](https://app.lightspark.com/docs). Here's a summary of some of the repositories you'll find in our org:
 
-## ⚡️ [Lightspark SDK](https://docs.lightspark.com/lightspark-sdk/getting-started)
+## [Lightspark SDK](https://docs.lightspark.com/lightspark-sdk/getting-started)
 Our Lightspark SDK is the quickest and most cost-effective way to send and receive Bitcoin payments on the Lightning Network. It is available in several programming languages:
 
 - [Typescript](https://github.com/lightsparkdev/js-sdk/tree/main/packages/lightspark-sdk/README.md) ([docs](https://docs.lightspark.com/lightspark-sdk/getting-started?language=typescript))
