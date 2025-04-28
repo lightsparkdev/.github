@@ -1,4 +1,4 @@
-# ⚡️ Hi, we're Lightspark!
+# Hi, we're Lightspark!
 
 ![Github_Header](https://github.com/lightsparkdev/.github/assets/1393755/d91d8c57-e8d1-4588-8289-26ef9da73e9e)
 
