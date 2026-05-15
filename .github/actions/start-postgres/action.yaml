@@ -1,0 +1,44 @@
+name: "start-postgres"
+description: >
+  Install postgres directly on the runner (no docker daemon required) and
+  start it on localhost:5432 with trust auth. Designed for ARC runners
+  where GitHub Actions `services:` blocks don't work because there's no
+  docker daemon. Equivalent drop-in for `services: { postgres: { image:
+  postgres:N } }`.
+
+inputs:
+  version:
+    description: "postgres major version, e.g. 14, 15, 16, 17"
+    required: false
+    default: "16"
+  database:
+    description: "Optional database to createdb after starting"
+    required: false
+    default: ""
+  password:
+    description: >
+      Optional password for the postgres superuser. Only needed if your
+      client code expects a literal password value — server-side auth is
+      `trust` so the password is not validated on connect.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: install + start postgres ${{ inputs.version }}
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y postgresql-${{ inputs.version }}
+        sudo -u postgres /usr/lib/postgresql/${{ inputs.version }}/bin/initdb \
+          -D /tmp/pgdata --auth=trust
+        sudo -u postgres /usr/lib/postgresql/${{ inputs.version }}/bin/pg_ctl \
+          -D /tmp/pgdata -l /tmp/pg.log -o "-p 5432" start
+        if [[ -n "${{ inputs.password }}" ]]; then
+          sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '${{ inputs.password }}'"
+        fi
+        if [[ -n "${{ inputs.database }}" ]]; then
+          sudo -u postgres createdb "${{ inputs.database }}"
+        fi
+        until pg_isready -h localhost -p 5432; do sleep 0.2; done
