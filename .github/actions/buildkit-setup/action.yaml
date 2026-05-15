@@ -1,0 +1,26 @@
+name: "buildkit-setup"
+description: >
+  Point docker/setup-buildx-action at the shared buildkitd service in the
+  tooling-prod EKS cluster. Use this on any ARC runner before
+  `docker/build-push-action`.
+
+  The runner pod has the mTLS client cert pre-mounted at
+  /etc/buildkit-client (see charts/arc-runner/values.yaml in
+  lightsparkdev/tooling-infra). No per-workflow auth wiring needed.
+
+inputs:
+  endpoint:
+    description: "buildkitd TCP endpoint. Override for testing against a specific replica via per-pod DNS (e.g. tcp://buildkitd-2.buildkitd.buildkit.svc.cluster.local:1234)."
+    required: false
+    default: "tcp://buildkitd.buildkit.svc.cluster.local:1234"
+
+runs:
+  using: composite
+  steps:
+    - uses: docker/setup-buildx-action@v3
+      with:
+        driver: remote
+        endpoint: ${{ inputs.endpoint }}
+        cacert: /etc/buildkit-client/ca.crt
+        cert: /etc/buildkit-client/tls.crt
+        key: /etc/buildkit-client/tls.key
