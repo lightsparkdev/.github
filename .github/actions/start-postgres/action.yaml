@@ -1,0 +1,68 @@
+name: "start-postgres"
+description: >
+  Install postgres directly on the runner (no docker daemon required) and
+  start it on localhost:5432 with trust auth. Designed for ARC runners
+  where GitHub Actions `services:` blocks don't work because there's no
+  docker daemon. Equivalent drop-in for `services: { postgres: { image:
+  postgres:N } }`.
+
+inputs:
+  version:
+    description: "postgres major version, e.g. 14, 15, 16, 17"
+    required: false
+    default: "16"
+  database:
+    description: "Optional database to createdb after starting"
+    required: false
+    default: ""
+  password:
+    description: >
+      Optional password for the postgres superuser. Only needed if your
+      client code expects a literal password value — server-side auth is
+      `trust` so the password is not validated on connect.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: install + start postgres ${{ inputs.version }}
+      shell: bash
+      env:
+        POSTGRES_VERSION: ${{ inputs.version }}
+        POSTGRES_DATABASE: ${{ inputs.database }}
+        POSTGRES_PASSWORD: ${{ inputs.password }}
+      run: |
+        set -euo pipefail
+
+        pg_bin="/usr/lib/postgresql/${POSTGRES_VERSION}/bin"
+        pg_data="$(mktemp -d /tmp/start-postgres.XXXXXX)"
+        sudo chown postgres:postgres "$pg_data"
+        pg_log="$pg_data/postgres.log"
+
+        sudo apt-get update
+        sudo apt-get install -y "postgresql-${POSTGRES_VERSION}"
+        sudo -u postgres "$pg_bin/initdb" \
+          -D "$pg_data" --auth=trust
+        sudo -u postgres "$pg_bin/pg_ctl" \
+          -D "$pg_data" -l "$pg_log" -o "-p 5432" start
+        for _ in $(seq 1 150); do
+          if "$pg_bin/pg_isready" -h localhost -p 5432 >/dev/null 2>&1; then
+            break
+          fi
+          sleep 0.2
+        done
+        if ! "$pg_bin/pg_isready" -h localhost -p 5432 >/dev/null 2>&1; then
+          echo "postgres failed to become ready; startup log:" >&2
+          sed 's/^/  /' "$pg_log" >&2
+          exit 1
+        fi
+        if [[ -n "$POSTGRES_PASSWORD" ]]; then
+          escaped_password=${POSTGRES_PASSWORD//\'/\'\'}
+          sudo -u postgres "$pg_bin/psql" \
+            -v ON_ERROR_STOP=1 \
+            -c "ALTER USER postgres WITH PASSWORD '$escaped_password'"
+        fi
+        if [[ -n "$POSTGRES_DATABASE" ]]; then
+          sudo -u postgres "$pg_bin/createdb" -- "$POSTGRES_DATABASE"
+        fi
