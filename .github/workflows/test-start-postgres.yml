@@ -18,7 +18,7 @@ jobs:
       matrix:
         # GH-hosted and ARC behave differently — hosted images bake in the
         # postgres user, ARC runners do not. Both must work.
-        runner: [ubuntu-24.04, arc-runner-4]
+        runner: [ubuntu-24.04, arc-runner-1]
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v4
