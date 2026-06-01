@@ -37,11 +37,14 @@ runs:
 
         pg_bin="/usr/lib/postgresql/${POSTGRES_VERSION}/bin"
         pg_data="$(mktemp -d /tmp/start-postgres.XXXXXX)"
-        sudo chown postgres:postgres "$pg_data"
         pg_log="$pg_data/postgres.log"
 
         sudo apt-get update
         sudo apt-get install -y "postgresql-${POSTGRES_VERSION}"
+        # postinst from postgresql-N is what creates the `postgres` user, so
+        # chown can only run after install — on minimal images (ARC) the user
+        # doesn't exist before this point.
+        sudo chown postgres:postgres "$pg_data"
         sudo -u postgres "$pg_bin/initdb" \
           -D "$pg_data" --auth=trust
         sudo -u postgres "$pg_bin/pg_ctl" \
