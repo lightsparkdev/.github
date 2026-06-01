@@ -58,10 +58,10 @@ runs:
           exit 1
         fi
         if [[ -n "$POSTGRES_PASSWORD" ]]; then
+          escaped_password=${POSTGRES_PASSWORD//\'/\'\'}
           sudo -u postgres "$pg_bin/psql" \
-            --set=password="$POSTGRES_PASSWORD" \
             -v ON_ERROR_STOP=1 \
-            -c "ALTER USER postgres WITH PASSWORD :'password'"
+            -c "ALTER USER postgres WITH PASSWORD '$escaped_password'"
         fi
         if [[ -n "$POSTGRES_DATABASE" ]]; then
           sudo -u postgres "$pg_bin/createdb" -- "$POSTGRES_DATABASE"
