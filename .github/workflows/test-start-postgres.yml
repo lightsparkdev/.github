@@ -1,6 +1,9 @@
 name: Test Start Postgres
 
 on:
+  push:
+    branches:
+      - mark/start-postgres-smoke-test
   workflow_dispatch:
 
 jobs:
