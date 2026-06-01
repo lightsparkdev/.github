@@ -28,17 +28,40 @@ runs:
   steps:
     - name: install + start postgres ${{ inputs.version }}
       shell: bash
+      env:
+        POSTGRES_VERSION: ${{ inputs.version }}
+        POSTGRES_DATABASE: ${{ inputs.database }}
+        POSTGRES_PASSWORD: ${{ inputs.password }}
       run: |
+        set -euo pipefail
+
+        pg_bin="/usr/lib/postgresql/${POSTGRES_VERSION}/bin"
+        pg_data="$(mktemp -d /tmp/start-postgres.XXXXXX)"
+        pg_log="$(mktemp /tmp/start-postgres.XXXXXX.log)"
+
         sudo apt-get update
-        sudo apt-get install -y postgresql-${{ inputs.version }}
-        sudo -u postgres /usr/lib/postgresql/${{ inputs.version }}/bin/initdb \
-          -D /tmp/pgdata --auth=trust
-        sudo -u postgres /usr/lib/postgresql/${{ inputs.version }}/bin/pg_ctl \
-          -D /tmp/pgdata -l /tmp/pg.log -o "-p 5432" start
-        if [[ -n "${{ inputs.password }}" ]]; then
-          sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '${{ inputs.password }}'"
+        sudo apt-get install -y "postgresql-${POSTGRES_VERSION}"
+        sudo -u postgres "$pg_bin/initdb" \
+          -D "$pg_data" --auth=trust
+        sudo -u postgres "$pg_bin/pg_ctl" \
+          -D "$pg_data" -l "$pg_log" -o "-p 5432" start
+        for _ in $(seq 1 150); do
+          if "$pg_bin/pg_isready" -h localhost -p 5432 >/dev/null 2>&1; then
+            break
+          fi
+          sleep 0.2
+        done
+        if ! "$pg_bin/pg_isready" -h localhost -p 5432 >/dev/null 2>&1; then
+          echo "postgres failed to become ready; startup log:" >&2
+          sed 's/^/  /' "$pg_log" >&2
+          exit 1
         fi
-        if [[ -n "${{ inputs.database }}" ]]; then
-          sudo -u postgres createdb "${{ inputs.database }}"
+        if [[ -n "$POSTGRES_PASSWORD" ]]; then
+          sudo -u postgres "$pg_bin/psql" \
+            --set=password="$POSTGRES_PASSWORD" \
+            -v ON_ERROR_STOP=1 \
+            -c "ALTER USER postgres WITH PASSWORD :'password'"
         fi
-        until pg_isready -h localhost -p 5432; do sleep 0.2; done
+        if [[ -n "$POSTGRES_DATABASE" ]]; then
+          sudo -u postgres "$pg_bin/createdb" -- "$POSTGRES_DATABASE"
+        fi
