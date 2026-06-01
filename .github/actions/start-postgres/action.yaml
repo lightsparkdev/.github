@@ -37,7 +37,8 @@ runs:
 
         pg_bin="/usr/lib/postgresql/${POSTGRES_VERSION}/bin"
         pg_data="$(mktemp -d /tmp/start-postgres.XXXXXX)"
-        pg_log="$(mktemp /tmp/start-postgres.XXXXXX.log)"
+        sudo chown postgres:postgres "$pg_data"
+        pg_log="$pg_data/postgres.log"
 
         sudo apt-get update
         sudo apt-get install -y "postgresql-${POSTGRES_VERSION}"
