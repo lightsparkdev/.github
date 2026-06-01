@@ -13,13 +13,10 @@ on:
 
 jobs:
   smoke:
-    strategy:
-      fail-fast: false
-      matrix:
-        # GH-hosted and ARC behave differently — hosted images bake in the
-        # postgres user, ARC runners do not. Both must work.
-        runner: [ubuntu-24.04, arc-runner-1]
-    runs-on: ${{ matrix.runner }}
+    # The interesting target for this action is ARC, but org runner groups
+    # block self-hosted runners on public repos. Smoke runs hosted-only; ARC
+    # behavior is exercised by downstream callers (private repos).
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/start-postgres
