@@ -1,6 +1,9 @@
 # Hi, we're Lightspark!
 
-![Github_Header](https://github.com/lightsparkdev/.github/assets/1393755/d91d8c57-e8d1-4588-8289-26ef9da73e9e)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/gh-hero-dark.png">
+  <img alt="Lightspark" src="./assets/gh-hero-light.png">
+</picture>
 
 
 Lightspark builds products and APIs for moving money. We make it simple to send value instantly anywhere in the world on an open network. You can learn more about our products [here](https://www.lightspark.com/products).
