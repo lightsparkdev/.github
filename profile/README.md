@@ -1,8 +1,8 @@
 # Hi, we're Lightspark!
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/gh-hero-dark.png">
-  <img alt="Lightspark" src="./assets/gh-hero-light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lightsparkdev/.github/main/profile/assets/gh-hero-dark.png">
+  <img alt="Lightspark" src="https://raw.githubusercontent.com/lightsparkdev/.github/main/profile/assets/gh-hero-light.png">
 </picture>
 
 
